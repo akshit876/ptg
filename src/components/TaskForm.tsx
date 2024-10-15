@@ -1,30 +1,8 @@
-import React, { useState, useContext } from "react";
-import { TaskContext } from "../TaskContext";
+import React from "react";
+import { useTaskForm } from "../hooks/useTaskForm";
 
 const TaskForm: React.FC = () => {
-  const [title, setTitle] = useState("");
-  const [error, setError] = useState("");
-  const context = useContext(TaskContext);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (title.trim()) {
-      if (context) {
-        context.addTask(title.trim());
-        setTitle("");
-        setError("");
-      }
-    } else {
-      setError("Task cannot be empty");
-    }
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.target.value);
-    if (error) {
-      setError("");
-    }
-  };
+  const { title, error, handleSubmit, handleInputChange } = useTaskForm();
 
   return (
     <form onSubmit={handleSubmit} className="mt-4">
